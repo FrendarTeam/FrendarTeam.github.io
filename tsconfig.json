@@ -20,7 +20,6 @@
     "paths": {
       "@root/*": ["./src/*"],
       "@css/*": ["./src/css/*"],
-      "@script/*": ["src/scripts/*"]
     },
     "noEmit": true,
     "jsx": "react-jsx"
