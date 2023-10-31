@@ -17,10 +17,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "paths": {
-      "@root/*": ["./src/*"],
-      "@css/*": ["./src/css/*"],
-    },
+    // "paths": {
+    //   "@root/*": ["./src/*"],
+    //   "@css/*": ["./src/css/*"],
+    // },
+    "baseUrl": "src",
     "noEmit": true,
     "jsx": "react-jsx"
   },
