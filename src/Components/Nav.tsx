@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import ReactModal from 'react-modal';
-
-const customModalStyles: ReactModal.Styles = {
-    overlay: {
-        backgroundColor: ' rgba(0, 0, 0, 0.4)',
-        width: '100%',
-        height: '100vh',
-        zIndex: '10',
-        position: 'fixed',
-        top: '0',
-        left: '0',
-    },
-    content: {
-        width: '360px',
-        height: '180px',
-        zIndex: '150',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '10px',
-        boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        overflow: 'auto',
-    },
-};
+import freindIcon from 'Assets/Images/freind.png';
+import FrenidModal from './Modals/FrenidModal';
 
 export default function Nav() {
+    const [isFreindModal, setIsFreindModal] = useState<boolean>(false);
+    const [isMenuModal, setIsMenuModal] = useState<boolean>(false);
+
+    const handleIsFreindModal = useCallback(() => {
+        setIsFreindModal(!isFreindModal);
+    }, [isFreindModal]);
+
+    const handleIsMenuModal = useCallback(() => {
+        setIsMenuModal(!isMenuModal);
+    }, [isMenuModal]);
+
     return (
         <div>
-            <ReactModal isOpen={true} style={customModalStyles}>
-                <div className="flex flex-col">dfdf</div>
-            </ReactModal>
+            {/* 친구 목록 모달 */}
+            {isFreindModal && (
+                <FrenidModal handleIsFreindModal={handleIsFreindModal} />
+            )}
+            <div className="flex flex-row justify-between items-center px-5 py-3">
+                <div
+                    className="flex flex-row items-center"
+                    onClick={() => {
+                        handleIsFreindModal();
+                    }}
+                >
+                    <img src={freindIcon} className="w-8 h-8" />
+                </div>
+                {/* 햄버거 버튼 */}
+                <div
+                    className="flex flex-col h-4  justify-between"
+                    onClick={() => handleIsMenuModal()}
+                >
+                    <div className="w-5 h-0.5  bg-slate-400" />
+                    <div className="w-5 h-0.5 bg-slate-400" />
+                    <div className="w-5 h-0.5 bg-slate-400" />
+                </div>
+            </div>
         </div>
     );
 }

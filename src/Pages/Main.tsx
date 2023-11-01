@@ -7,11 +7,6 @@ import Nav from 'Components/Nav';
 import { AuthAPI } from 'Scripts/Auth';
 
 export default function Main() {
-    const logout = async () => {
-        await AuthAPI.logout();
-    };
-
-    logout();
     return (
         <div className="flex flex-col flex-1">
             <Nav />

@@ -1,10 +1,19 @@
 import React from 'react';
 import kakaoLogin from 'Assets/Images/kakao-login.png';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthAPI } from 'Scripts/Auth';
+import { Cookies } from 'react-cookie';
+const cookies = new Cookies();
 
 export default function Auth() {
     const [query, setQuery] = useSearchParams();
+    const navigate = useNavigate();
+    const accessToken = cookies.get('accessToken');
+    const refreshToken = cookies.get('refreshToken');
+
+    if (accessToken && refreshToken) {
+        navigate('/main');
+    }
 
     if (query) {
         const code = query.get('code');
@@ -14,9 +23,10 @@ export default function Auth() {
             AuthAPI.getKakaoToken(code)
                 .then((accessToken) =>
                     AuthAPI.kakaoLogin(accessToken).then((res) => {
-                        console.log(res);
-                        // const cookie = cookies.get('accessToken');
-                        // console.log(cookie);
+                        const tokens = res.data.data.tokens;
+                        // 쿠키에 토큰 저장
+                        document.cookie = `accessToken=${tokens.accessToken}`;
+                        document.cookie = `refreshToken=${tokens.refreshToken}`;
                     }),
                 )
                 .catch((err) => console.log(err));
