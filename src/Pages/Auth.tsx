@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import kakaoLogin from 'Assets/Images/kakao-login.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthAPI } from 'Scripts/Auth';
@@ -10,6 +10,12 @@ export default function Auth() {
     const navigate = useNavigate();
     const accessToken = cookies.get('accessToken');
     const refreshToken = cookies.get('refreshToken');
+
+    useEffect(() => {
+        if (accessToken && refreshToken) {
+            navigate('/main');
+        }
+    }, []);
 
     if (accessToken && refreshToken) {
         navigate('/main');
