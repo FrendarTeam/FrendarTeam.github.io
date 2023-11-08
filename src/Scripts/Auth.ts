@@ -2,17 +2,13 @@ import axios from './index'
 import baseAxios from 'axios'
 export class AuthAPI{
     static  kakaoLogin = async(code : string) => {
-
-
         const result = await axios.post('/auth/login/kakao', {token : code})
         return result
     }
 
     static getKakaoToken = async(code : string) => {
         const getTokenUrl = 'https://kauth.kakao.com/oauth/token';
-
         try{
-
             const result = await baseAxios.post(getTokenUrl, {
                 
                 grant_type : "authorization_code",

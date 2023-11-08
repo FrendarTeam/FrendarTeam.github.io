@@ -31,8 +31,8 @@ export default function Auth() {
                     AuthAPI.kakaoLogin(accessToken).then((res) => {
                         const tokens = res.data.data.tokens;
                         // 쿠키에 토큰 저장
-                        document.cookie = `accessToken=${tokens.accessToken}`;
-                        document.cookie = `refreshToken=${tokens.refreshToken}`;
+                        document.cookie = `AccessToken=${tokens.accessToken}`;
+                        document.cookie = `RefreshToken=${tokens.refreshToken}`;
                     }),
                 )
                 .catch((err) => console.log(err));
