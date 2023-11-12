@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import kakaoLogin from 'Assets/Images/kakao-login.png';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthAPI } from 'Scripts/Auth';
