@@ -34,15 +34,5 @@ interface Props {
 }
 
 export default function MenuModal(props: Props) {
-    return (
-        <ReactModal
-            isOpen={true}
-            style={customModalStyles}
-            onRequestClose={() => props.handleIsMenuModal()}
-            onAfterOpen={() => {
-                console.log('onAfterOpen');
-            }}
-            closeTimeoutMS={2000}
-        ></ReactModal>
-    );
+    return <div></div>;
 }
