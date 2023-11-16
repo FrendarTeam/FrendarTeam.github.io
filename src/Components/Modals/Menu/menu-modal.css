@@ -1,14 +1,43 @@
-.ReactModal__Content {
+
+.menu-modal-appear {
     transform: translate(100%, 0%);
-    transition: transform 200ms;
 }
 
-.ReactModal__Content--after-open {
-    transform: translate(20%, 0%);
-    transition: transform 200ms;
+.menu-modal-appear-active {
+    transform: translate(100%, 0%);
 }
 
-.ReactModal__Content--before-close {
-   
-    transition: transform 200ms;
+.menu-modal-appear-done {
+    transform: translate(100%, 0%);
 }
+
+.menu-modal-enter {
+    transform: translate(100%, 0%);
+}
+
+.menu-modal-enter-active {
+    transform: translate(0%, 0%);
+    transition: transform 200ms
+}
+
+.menu-modal-enter-done {
+    transform: translate(0%, 0%);
+}
+
+.menu-modal-exit {
+    transform: translate(0%, 0%);
+}
+
+.menu-modal-exit-active {
+    transform: translate(100%, 0%);
+    transition: transform 200ms
+}
+
+.menu-modal-exit-done {
+    transform: translate(100%, 0%);
+    transition: transform 200ms
+}
+
+/* .menu-modal__Content--before-close{
+    transition: transform 200ms;
+} */

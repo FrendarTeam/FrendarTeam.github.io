@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactModal from 'react-modal';
 import AddFreind from '../Buttons/AddFreind';
-import FreindContaiter from '../Lists/FreindContaiter';
+import FreindContaiter from './FreindContaiter';
 import './freind-modal.css';
 import { CSSTransition } from 'react-transition-group';
 

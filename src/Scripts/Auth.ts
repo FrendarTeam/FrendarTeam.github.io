@@ -28,8 +28,7 @@ export class AuthAPI{
             console.log(err)
         }
 
-       
-
+    
 
     }
 
