@@ -1,12 +1,25 @@
-import React from 'react';
 import 'react-calendar/dist/Calendar.css';
+import { useAppDispatch, useAppSelector } from 'Hooks/Redux';
+import { set } from 'Features/userSlice';
 
 import Calendar from 'react-calendar';
 import Schedule from 'Components/Schedule';
 import Nav from 'Components/Nav';
-import { AuthAPI } from 'Scripts/Auth';
+import { useEffect } from 'react';
 
 export default function Main() {
+    console.log(useAppSelector((state) => state.user));
+    const userDispatch = useAppDispatch();
+
+    useEffect(() => {
+        userDispatch(
+            set({
+                userId: 1,
+                nickname: 'test',
+            }),
+        );
+    }, []);
+
     return (
         <div className="flex flex-col flex-1">
             <Nav />
