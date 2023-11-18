@@ -15,24 +15,25 @@ export default function MenuModal(props: Props) {
         setModal(true);
     }, []);
     return (
-        <div
-            id={'ovelay'}
-            style={{
-                backgroundColor: ' rgba(0, 0, 0, 0.4)',
-                width: '100%',
-                height: '100%',
-                zIndex: '10',
-                position: 'fixed',
-                top: '0',
-                left: '0',
-            }}
-            onClick={() => {
-                setModal(false);
-                setTimeout(() => {
-                    props.handleIsMenuModal();
-                }, 200);
-            }}
-        >
+        <div>
+            <div
+                id={'ovelay'}
+                style={{
+                    backgroundColor: ' rgba(0, 0, 0, 0.4)',
+                    width: '100%',
+                    height: '100%',
+                    zIndex: '10',
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                }}
+                onClick={() => {
+                    setModal(false);
+                    setTimeout(() => {
+                        props.handleIsMenuModal();
+                    }, 200);
+                }}
+            ></div>
             <CSSTransition
                 in={modal}
                 nodeRef={nodeRef}

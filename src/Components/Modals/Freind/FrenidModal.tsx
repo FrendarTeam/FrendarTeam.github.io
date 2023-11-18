@@ -19,24 +19,26 @@ export default function FrenidModal(props: Props) {
 
     return (
         // transition
-        <div
-            id={'ovelay'}
-            style={{
-                backgroundColor: ' rgba(0, 0, 0, 0.4)',
-                width: '100%',
-                height: '100vh',
-                zIndex: '10',
-                position: 'fixed',
-                top: '0',
-                left: '0',
-            }}
-            onClick={() => {
-                setModal(false);
-                setTimeout(() => {
-                    props.handleIsFreindModal();
-                }, 200);
-            }}
-        >
+        <div>
+            <div
+                id={'ovelay'}
+                style={{
+                    backgroundColor: ' rgba(0, 0, 0, 0.4)',
+                    width: '100%',
+                    height: '100vh',
+                    zIndex: 10,
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                }}
+                onClick={(e) => {
+                    setModal(false);
+                    setTimeout(() => {
+                        props.handleIsFreindModal();
+                    }, 200);
+                }}
+            ></div>
+            {/* content */}
             <CSSTransition
                 in={modal}
                 nodeRef={nodeRef}
@@ -49,8 +51,9 @@ export default function FrenidModal(props: Props) {
                     style={{
                         width: '80%',
                         height: '100%',
-                        zIndex: '150',
-                        position: 'absolute',
+
+                        zIndex: 100,
+                        position: 'fixed',
                         top: '0',
                         left: '0',
                         // transform: !modal ? 'translate(-100%, 0%)' : '',
