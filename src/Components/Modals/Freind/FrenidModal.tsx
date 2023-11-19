@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactModal from 'react-modal';
+import { useEffect, useRef, useState } from 'react';
 import AddFreind from '../Buttons/AddFreind';
 import FreindContaiter from './FreindContaiter';
 import './freind-modal.css';
