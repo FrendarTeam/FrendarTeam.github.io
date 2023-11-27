@@ -1,19 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
-import './menu-modal.css';
-import { CSSTransition } from 'react-transition-group';
-import MenuList from './MenuList';
+import { useEffect, useRef, useState } from 'react'
+import './menu-modal.css'
+import { CSSTransition } from 'react-transition-group'
+import MenuList from './MenuList'
+import { useAppSelector } from 'Hooks/Redux'
 
 interface Props {
-    handleIsMenuModal: () => void;
+    handleIsMenuModal: () => void
 }
 
 export default function MenuModal(props: Props) {
-    const [modal, setModal] = useState(false);
-    const nodeRef = useRef(null);
+    const [modal, setModal] = useState(false)
+    const nodeRef = useRef(null)
 
     useEffect(() => {
-        setModal(true);
-    }, []);
+        setModal(true)
+    }, [])
     return (
         <div>
             <div
@@ -28,18 +29,13 @@ export default function MenuModal(props: Props) {
                     left: '0',
                 }}
                 onClick={() => {
-                    setModal(false);
+                    setModal(false)
                     setTimeout(() => {
-                        props.handleIsMenuModal();
-                    }, 200);
+                        props.handleIsMenuModal()
+                    }, 200)
                 }}
             ></div>
-            <CSSTransition
-                in={modal}
-                nodeRef={nodeRef}
-                timeout={200}
-                classNames={'menu-modal'}
-            >
+            <CSSTransition in={modal} nodeRef={nodeRef} timeout={200} classNames={'menu-modal'}>
                 <div
                     ref={nodeRef}
                     id={'content'}
@@ -65,5 +61,5 @@ export default function MenuModal(props: Props) {
                 </div>
             </CSSTransition>
         </div>
-    );
+    )
 }
