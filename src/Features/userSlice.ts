@@ -9,6 +9,7 @@ export const userSlice = createSlice({
             profileUrl: undefined,
             themeColor: 'white',
             code: undefined,
+            isNotification: undefined,
         },
     },
     reducers: {

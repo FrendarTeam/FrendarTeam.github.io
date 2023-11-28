@@ -1,18 +1,33 @@
-import { useAppSelector } from 'Hooks/Redux'
+import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
 import { UserAPI } from 'Scripts/User'
 import React, { useCallback, useState } from 'react'
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css' // for ES6 modules
 import mainColors from 'Types/Enum/main-color'
 import MainColor from './MainColor'
+import { set } from 'Features/userSlice'
 
 export default function MenuList() {
-    const [isAlarmToggle, setIsAlarmToggle] = useState<boolean>(false)
+    const isNotification = useAppSelector(
+        (state) => state.user.value.isNotification,
+    )
+    const [isAlarmToggle, setIsAlarmToggle] = useState<boolean>(
+        isNotification ? isNotification : false,
+    )
+
+    const dispatch = useAppDispatch()
+
     const mainColor = mainColors
     const user = useAppSelector((state) => state.user)
 
     const handleAlarmToggle = useCallback(async () => {
         setIsAlarmToggle(!isAlarmToggle)
+        dispatch(
+            set({
+                ...user.value,
+                isNotification: !isAlarmToggle,
+            }),
+        )
         await UserAPI.updateAlarmToggle()
     }, [isAlarmToggle])
 
