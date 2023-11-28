@@ -1,6 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-export default function FreindContaiter() {
+interface Props {
+    nickname: string
+    profileUrl: string
+}
+
+export default function FreindContaiter(props: Props) {
     return (
         <div className="w-5/6 mb-4">
             <div
@@ -20,7 +25,7 @@ export default function FreindContaiter() {
                 >
                     <img
                         className="h-16 w-16  object-cover rounded-full"
-                        src="https://i.namu.wiki/i/23IWDVBFIP9J3Gi288Tm_N_Ji-gxLuVuH0ti2BxMPx90ScamKjClMqSwUalYYRoOAjDrBj5rQy7RDF9H9td7LA.webp"
+                        src={props.profileUrl}
                         alt="profile"
                     />
                 </div>
@@ -29,10 +34,10 @@ export default function FreindContaiter() {
                     className="flex flex-col justify-center"
                 >
                     <div className="flex flex-col ">
-                        <div className="flex">여기는 닉네임</div>
+                        <div className="flex">{props.nickname}</div>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }

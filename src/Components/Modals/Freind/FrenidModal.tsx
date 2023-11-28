@@ -1,20 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
-import AddFreind from '../Buttons/AddFreind';
-import FreindContaiter from './FreindContaiter';
-import './freind-modal.css';
-import { CSSTransition } from 'react-transition-group';
+import { useEffect, useRef, useState } from 'react'
+import AddFreind from '../Buttons/AddFreind'
+import FreindContaiter from './FreindContaiter'
+import './freind-modal.css'
+import { CSSTransition } from 'react-transition-group'
+import { Freinds } from 'Types/Freind/freinds'
+import { FriendAPI } from 'Scripts/Freind'
 
 interface Props {
-    handleIsFreindModal: () => void;
+    handleIsFreindModal: () => void
 }
 
 export default function FrenidModal(props: Props) {
-    const [modal, setModal] = useState(false);
-    const nodeRef = useRef(null);
+    const [modal, setModal] = useState(false)
+    const [freinds, setFreinds] = useState<Freinds[]>([])
+
+    const nodeRef = useRef(null)
 
     useEffect(() => {
-        setModal(true);
-    }, []);
+        const getFreinds = async () => {
+            const freindsData = await FriendAPI.getFriends()
+            setFreinds(freindsData)
+        }
+        getFreinds()
+        setModal(true)
+    }, [])
 
     return (
         // transition
@@ -31,10 +40,10 @@ export default function FrenidModal(props: Props) {
                     left: '0',
                 }}
                 onClick={(e) => {
-                    setModal(false);
+                    setModal(false)
                     setTimeout(() => {
-                        props.handleIsFreindModal();
-                    }, 200);
+                        props.handleIsFreindModal()
+                    }, 200)
                 }}
             ></div>
             {/* content */}
@@ -69,20 +78,19 @@ export default function FrenidModal(props: Props) {
                             <AddFreind />
                         </div>
                         <div className="flex w-full h-5/6 flex-col  overflow-scroll items-center">
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
-                            <FreindContaiter />
+                            {freinds.map((freind) => {
+                                return (
+                                    <FreindContaiter
+                                        key={freind.id}
+                                        nickname={freind.nickname}
+                                        profileUrl={freind.profileUrl}
+                                    />
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
             </CSSTransition>
         </div>
-    );
+    )
 }
