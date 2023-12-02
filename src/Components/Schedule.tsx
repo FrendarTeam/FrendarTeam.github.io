@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react'
+import ScheduleModal from './Modals/Schdules/ScheduleModal'
 
 interface Props {
-    time: string;
-    title: string;
-    color?: string;
+    time: string
+    title: string
+    color?: string
 }
 
 export default function Schedule(props: Props) {
+    const [isScheduleModal, setIsScheduleModal] = useState<boolean>(false)
+
+    const handleIsScheduleModal = async () => {
+        setIsScheduleModal(!isScheduleModal)
+    }
+
+    if (isScheduleModal) {
+        return (
+            <div>
+                <ScheduleModal handleIsScheduleModal={handleIsScheduleModal} />
+            </div>
+        )
+    }
+
     return (
         <div className="px-5 pt-3 flex flex-row">
             <div className="flex basis-[30%]">{props.time}</div>
@@ -28,11 +43,14 @@ export default function Schedule(props: Props) {
                                 ? props.color
                                 : 'rgba(0,0,0,0.1)',
                         }}
+                        onClick={() => {
+                            handleIsScheduleModal()
+                        }}
                     >
                         {props.title}
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }

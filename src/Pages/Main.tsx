@@ -13,7 +13,6 @@ import { UserAPI } from 'Scripts/User'
 export default function Main() {
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user)
-    console.log(user)
     useEffect(() => {
         const getUser = async () => {
             const user = await UserAPI.getUser()

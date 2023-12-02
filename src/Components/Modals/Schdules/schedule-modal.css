@@ -1,0 +1,42 @@
+.schedule-modal-appear {
+    transform: translate(100%, 0%);
+}
+
+.schedule-modal-appear-active {
+    transform: translate(100%, 0%);
+}
+
+.schedule-modal-appear-done {
+    transform: translate(100%, 0%);
+}
+
+.schedule-modal-enter {
+    transform: translate(100%, 0%);
+}
+
+.schedule-modal-enter-active {
+    transform: translate(0%, 0%);
+    transition: transform 200ms;
+}
+
+.schedule-modal-enter-done {
+    transform: translate(0%, 0%);
+}
+
+.schedule-modal-exit {
+    transform: translate(0%, 0%);
+}
+
+.schedule-modal-exit-active {
+    transform: translate(100%, 0%);
+    transition: transform 200ms;
+}
+
+.schedule-modal-exit-done {
+    transform: translate(100%, 0%);
+    transition: transform 200ms;
+}
+
+/* .schedule-modal__Content--before-close{
+    transition: transform 200ms;
+} */

@@ -1,27 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
-import AddFreind from './AddFreind'
-import FreindContaiter from './FreindContaiter'
-import './freind-modal.css'
+import React, { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { Freinds } from 'Types/Freind/freinds'
-import { FriendAPI } from 'Scripts/Freind'
+import './schedule-modal.css'
 
 interface Props {
-    handleIsFreindModal: () => void
+    handleIsScheduleModal: () => void
 }
-
-export default function FrenidModal(props: Props) {
+export default function ScheduleModal(props: Props) {
     const [modal, setModal] = useState(false)
-    const [freinds, setFreinds] = useState<Freinds[]>([])
-
     const nodeRef = useRef(null)
 
     useEffect(() => {
-        const getFreinds = async () => {
-            const freindsData = await FriendAPI.getFriends()
-            setFreinds(freindsData)
-        }
-        getFreinds()
         setModal(true)
     }, [])
 
@@ -42,7 +30,7 @@ export default function FrenidModal(props: Props) {
                 onClick={(e) => {
                     setModal(false)
                     setTimeout(() => {
-                        props.handleIsFreindModal()
+                        props.handleIsScheduleModal()
                     }, 200)
                 }}
             ></div>
@@ -51,18 +39,18 @@ export default function FrenidModal(props: Props) {
                 in={modal}
                 nodeRef={nodeRef}
                 timeout={200}
-                classNames={'modal'}
+                classNames={'schedule-modal'}
             >
                 <div
                     ref={nodeRef}
                     id={'content'}
                     style={{
-                        width: '80%',
-                        height: '100%',
+                        width: '100%',
+                        height: '60%',
 
                         zIndex: 100,
                         position: 'fixed',
-                        top: '0',
+                        bottom: '0',
                         left: '0',
                         // transform: !modal ? 'translate(-100%, 0%)' : '',
                         borderRadius: '0px 10px 10px 0px',
@@ -73,22 +61,7 @@ export default function FrenidModal(props: Props) {
                         backgroundColor: 'white',
                     }}
                 >
-                    <div className="flex flex-col w-full    h-full justify-end items-center">
-                        <div className="flex w-5/6 items-center   h-1/5">
-                            <AddFreind />
-                        </div>
-                        <div className="flex w-full h-5/6 flex-col  overflow-scroll items-center">
-                            {freinds.map((freind) => {
-                                return (
-                                    <FreindContaiter
-                                        key={freind.id}
-                                        nickname={freind.nickname}
-                                        profileUrl={freind.profileUrl}
-                                    />
-                                )
-                            })}
-                        </div>
-                    </div>
+                    <div className="flex flex-col w-full    h-full justify-end items-center"></div>
                 </div>
             </CSSTransition>
         </div>
