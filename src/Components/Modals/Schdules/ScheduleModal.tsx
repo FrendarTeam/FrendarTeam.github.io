@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import './schedule-modal.css'
+import ScheduleList from './ScheduleList'
 
 interface Props {
     handleIsScheduleModal: () => void
@@ -53,7 +54,7 @@ export default function ScheduleModal(props: Props) {
                         bottom: '0',
                         left: '0',
                         // transform: !modal ? 'translate(-100%, 0%)' : '',
-                        borderRadius: '0px 10px 10px 0px',
+                        borderRadius: '10px 10px 0px 0px',
                         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
 
                         justifyContent: 'center',
@@ -61,7 +62,9 @@ export default function ScheduleModal(props: Props) {
                         backgroundColor: 'white',
                     }}
                 >
-                    <div className="flex flex-col w-full    h-full justify-end items-center"></div>
+                    <div className="flex flex-col w-full    h-full  items-center">
+                        <ScheduleList />
+                    </div>
                 </div>
             </CSSTransition>
         </div>

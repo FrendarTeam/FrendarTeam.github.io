@@ -14,16 +14,11 @@ export default function Schedule(props: Props) {
         setIsScheduleModal(!isScheduleModal)
     }
 
-    if (isScheduleModal) {
-        return (
-            <div>
-                <ScheduleModal handleIsScheduleModal={handleIsScheduleModal} />
-            </div>
-        )
-    }
-
     return (
         <div className="px-5 pt-3 flex flex-row">
+            {isScheduleModal && (
+                <ScheduleModal handleIsScheduleModal={handleIsScheduleModal} />
+            )}
             <div className="flex basis-[30%]">{props.time}</div>
             <div className="flex flex-col basis-[90%]">
                 <div className="flex flex-row items-center basis-[30%]">
