@@ -41,6 +41,38 @@ export default function ScheduleList() {
                     {scheduleData.title}
                 </p>
             </div>
+            <div className="flex  flex-col w-4/5 ">
+                <p>Location</p>
+                <p
+                    style={{
+                        fontSize: '30px',
+                    }}
+                >
+                    {scheduleData.location}
+                </p>
+            </div>
+            <div className="flex  flex-row w-4/5 ">
+                <div className="flex flex-col">
+                    <p>Start Time</p>
+                    <p
+                        style={{
+                            fontSize: '16px',
+                        }}
+                    >
+                        {scheduleData.startTime.toLocaleString()}
+                    </p>
+                </div>
+                <div className="flex flex-col">
+                    <p>End Time</p>
+                    <p
+                        style={{
+                            fontSize: '16px',
+                        }}
+                    >
+                        {scheduleData.startTime.toLocaleString()}
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }
