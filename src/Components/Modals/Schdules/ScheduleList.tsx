@@ -1,5 +1,8 @@
+import { formatDate } from 'Scripts/Common'
 import { ScheduleData } from 'Types/Schedule/scheduleData'
 import React, { useEffect, useState } from 'react'
+import Toggle from 'react-toggle'
+import './schedule.css'
 
 export default function ScheduleList() {
     const [scheduleData, setScheduleData] = useState<ScheduleData>()
@@ -8,8 +11,8 @@ export default function ScheduleList() {
         const getScheduleData = async () => {
             // const scheduleData = await ScheduleData.getScheduleData()
             const mockData: ScheduleData = {
-                title: 'title',
-                location: 'location',
+                title: '프렌더 회식',
+                location: '서울특별시 강남구 어딘가 건물',
                 startTime: new Date(),
                 endTime: new Date(),
                 isPrivate: false,
@@ -27,12 +30,32 @@ export default function ScheduleList() {
         getScheduleData()
     }, [])
 
+    const handleAlarmToggle = async () => {
+        setScheduleData((prev) => {
+            if (prev) {
+                return {
+                    ...prev,
+                    isPrivate: !prev.isPrivate,
+                }
+            }
+            return prev
+        })
+    }
+
     if (!scheduleData) return <></>
 
     return (
-        <div className="flex w-full flex-col items-center">
+        <div
+            className="
+        flex
+        w-full 
+        flex-col 
+        items-center
+        gap-2
+        "
+        >
             <div className="flex  flex-col w-4/5 ">
-                <p>Title</p>
+                <p className="header">Title</p>
                 <p
                     style={{
                         fontSize: '30px',
@@ -42,35 +65,72 @@ export default function ScheduleList() {
                 </p>
             </div>
             <div className="flex  flex-col w-4/5 ">
-                <p>Location</p>
+                <p className="header">Location</p>
                 <p
                     style={{
-                        fontSize: '30px',
+                        fontSize: '24px',
                     }}
                 >
                     {scheduleData.location}
                 </p>
             </div>
             <div className="flex  flex-row w-4/5 ">
-                <div className="flex flex-col">
-                    <p>Start Time</p>
+                <div className="flex flex-col w-full">
+                    <p className="header">Start Time</p>
                     <p
                         style={{
                             fontSize: '16px',
                         }}
                     >
-                        {scheduleData.startTime.toLocaleString()}
+                        {formatDate(scheduleData.startTime)}
                     </p>
                 </div>
-                <div className="flex flex-col">
-                    <p>End Time</p>
+                <div className="flex flex-col w-full">
+                    <p className="header">End Time</p>
                     <p
                         style={{
                             fontSize: '16px',
                         }}
                     >
-                        {scheduleData.startTime.toLocaleString()}
+                        {formatDate(scheduleData.endTime)}
                     </p>
+                </div>
+            </div>
+            <div
+                className="
+            flex 
+            flex-row 
+            w-4/5
+            justify-between
+            "
+            >
+                <p className="header">공개 여부</p>
+                <Toggle
+                    id="cheese-status"
+                    defaultChecked={scheduleData.isPrivate}
+                    onChange={handleAlarmToggle}
+                />
+            </div>
+            <div className="flex flex-col w-4/5">
+                <div className="flex">
+                    <p className="header">참여자</p>
+                </div>
+                <div className="flex flex-row gap-4">
+                    {scheduleData.freinds.map((freind) => {
+                        return (
+                            <div
+                                style={{
+                                    fontSize: '16px',
+                                    // border: '1px solid black',
+                                    padding: '6px 15px',
+                                    borderRadius: '50px',
+                                    backgroundColor: '#EAEAEA',
+                                }}
+                            >
+                                {freind.nickname}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

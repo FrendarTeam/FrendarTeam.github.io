@@ -54,15 +54,23 @@ export default function ScheduleModal(props: Props) {
                         bottom: '0',
                         left: '0',
                         // transform: !modal ? 'translate(-100%, 0%)' : '',
-                        borderRadius: '10px 10px 0px 0px',
+                        borderRadius: '50px 50px 0px 0px',
                         boxShadow: '2px 2px 2px rgba(0, 0, 0, 0.25)',
 
                         justifyContent: 'center',
+                        alignItems: 'center',
                         overflow: 'auto',
                         backgroundColor: 'white',
                     }}
                 >
-                    <div className="flex flex-col w-full    h-full  items-center">
+                    <div
+                        className="flex 
+                    flex-col
+                    w-full
+                    h-full
+                    justify-center
+                    "
+                    >
                         <ScheduleList />
                     </div>
                 </div>
