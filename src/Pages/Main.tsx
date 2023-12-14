@@ -3,6 +3,7 @@ import 'Assets/Css/Calendar.css'
 
 import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
 import { set } from 'Features/userSlice'
+import { setModal } from 'Features/modal-slice'
 
 import Calendar from 'react-calendar'
 import Schedule from 'Components/Schedule'
@@ -12,7 +13,13 @@ import { UserAPI } from 'Scripts/User'
 
 export default function Main() {
     const dispatch = useAppDispatch()
-    const user = useAppSelector((state) => state.user)
+    const user = useAppSelector((state) => state.user).value
+    const isModal = useAppSelector((state) => state.modal).value.isModal
+
+    useEffect(() => {
+        console.log(isModal)
+    }, [isModal])
+
     useEffect(() => {
         const getUser = async () => {
             const user = await UserAPI.getUser()
@@ -26,7 +33,8 @@ export default function Main() {
                 }),
             )
         }
-        if (!user.value.userId) {
+
+        if (!user.userId) {
             getUser()
         }
     }, [])
