@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import './schedule-modal.css'
-import ScheduleList from './ScheduleList'
+import Schedule from './ScheduleList'
 
 interface Props {
+    scheduleId: number
     handleIsScheduleModal: () => void
 }
 export default function ScheduleModal(props: Props) {
@@ -71,7 +72,7 @@ export default function ScheduleModal(props: Props) {
                     justify-center
                     "
                     >
-                        <ScheduleList />
+                        <Schedule scheduleId={props.scheduleId} />
                     </div>
                 </div>
             </CSSTransition>

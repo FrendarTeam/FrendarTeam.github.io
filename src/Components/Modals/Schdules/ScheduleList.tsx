@@ -3,25 +3,40 @@ import { ScheduleData } from 'Types/Schedule/scheduleData'
 import React, { useEffect, useState } from 'react'
 import Toggle from 'react-toggle'
 import './schedule.css'
+import { ScheduleAPI } from 'Scripts/Schdule'
+import { useParams } from 'react-router-dom'
 
-export default function ScheduleList() {
+interface Props {
+    scheduleId: number
+}
+
+export default function Schedule(props: Props) {
     const [scheduleData, setScheduleData] = useState<ScheduleData>()
-
+    const { userId } = useParams()
     useEffect(() => {
         const getScheduleData = async () => {
-            // const scheduleData = await ScheduleData.getScheduleData()
+            const scheduleData = await ScheduleAPI.getSchedule(
+                props.scheduleId,
+                Number(userId),
+            )
+
             const mockData: ScheduleData = {
+                id: 0,
                 title: '프렌더 회식',
                 location: '서울특별시 강남구 어딘가 건물',
                 startTime: new Date(),
                 endTime: new Date(),
                 isPrivate: false,
-                freinds: [
+                hostId: 2,
+                color: 'yellow',
+                participants: [
                     {
-                        nickname: 'user1',
+                        userId: 1,
+                        nickname: 'SUMIN',
                     },
                     {
-                        nickname: 'user2',
+                        userId: 2,
+                        nickname: 'gwon',
                     },
                 ],
             }
@@ -116,9 +131,10 @@ export default function ScheduleList() {
                     <p className="header">참여자</p>
                 </div>
                 <div className="flex flex-row gap-4">
-                    {scheduleData.freinds.map((freind) => {
+                    {scheduleData.participants.map((participant) => {
                         return (
                             <div
+                                key={participant.userId}
                                 style={{
                                     fontSize: '16px',
                                     // border: '1px solid black',
@@ -127,7 +143,7 @@ export default function ScheduleList() {
                                     backgroundColor: '#EAEAEA',
                                 }}
                             >
-                                {freind.nickname}
+                                {participant.nickname}
                             </div>
                         )
                     })}

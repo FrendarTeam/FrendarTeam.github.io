@@ -3,18 +3,38 @@ import 'Assets/Css/Calendar.css'
 
 import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
 import { set } from 'Features/userSlice'
-import { setModal } from 'Features/modal-slice'
 
 import Calendar from 'react-calendar'
 import Schedule from 'Components/Schedule'
 import Nav from 'Components/Nav'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { UserAPI } from 'Scripts/User'
+import { useParams } from 'react-router-dom'
+import { Schedules } from 'Types/Schedule/scheduleData'
+import { ScheduleAPI } from 'Scripts/Schdule'
 
 export default function Main() {
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user).value
     const isModal = useAppSelector((state) => state.modal).value.isModal
+    const { userId } = useParams()
+    const [schedules, setSchedules] = useState<Schedules | null>(null)
+
+    useEffect(() => {
+        const getSchedules = async () => {
+            const startTime = new Date(
+                new Date().getDate() - 1000,
+            ).toISOString()
+            const endTime = new Date().toISOString()
+            const shcedules = await ScheduleAPI.getSchedules(
+                Number(userId),
+                startTime,
+                endTime,
+            )
+            setSchedules(shcedules)
+        }
+        getSchedules()
+    }, [])
 
     useEffect(() => {
         console.log(isModal)
@@ -59,8 +79,17 @@ export default function Main() {
                     defaultView="month"
                 />
             </div>
-            <Schedule time={'19:00 PM'} title={''} />
-            <Schedule time={'07:00 AM'} title={'테스트 일정'} />
+            {schedules &&
+                schedules.task.map((schedule) => {
+                    return (
+                        <Schedule
+                            key={schedule.id}
+                            scheduleId={schedule.id}
+                            time={schedule.startTime}
+                            title={schedule.title}
+                        />
+                    )
+                })}
         </div>
     )
 }

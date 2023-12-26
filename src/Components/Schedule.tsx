@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ScheduleModal from './Modals/Schdules/ScheduleModal'
 
 interface Props {
+    scheduleId: number
     time: string
     title: string
     color?: string
@@ -17,7 +18,10 @@ export default function Schedule(props: Props) {
     return (
         <div className="px-5 pt-3 flex flex-row">
             {isScheduleModal && (
-                <ScheduleModal handleIsScheduleModal={handleIsScheduleModal} />
+                <ScheduleModal
+                    scheduleId={props.scheduleId}
+                    handleIsScheduleModal={handleIsScheduleModal}
+                />
             )}
             <div className="flex basis-[30%]">{props.time}</div>
             <div className="flex flex-col basis-[90%]">
