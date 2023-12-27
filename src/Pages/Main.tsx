@@ -12,6 +12,8 @@ import { UserAPI } from 'Scripts/User'
 import { useParams } from 'react-router-dom'
 import { Schedules } from 'Types/Schedule/scheduleData'
 import { ScheduleAPI } from 'Scripts/Schdule'
+import { formatDate } from 'Scripts/Common'
+import AddScheduleButton from 'Components/AddScheduleButton'
 
 export default function Main() {
     const dispatch = useAppDispatch()
@@ -37,10 +39,6 @@ export default function Main() {
     }, [])
 
     useEffect(() => {
-        console.log(isModal)
-    }, [isModal])
-
-    useEffect(() => {
         const getUser = async () => {
             const user = await UserAPI.getUser()
             dispatch(
@@ -62,6 +60,7 @@ export default function Main() {
     return (
         <div className="flex flex-col flex-1">
             <Nav />
+
             <div className="flex justify-center">
                 <Calendar
                     formatDay={(locale, date) => {
@@ -85,11 +84,12 @@ export default function Main() {
                         <Schedule
                             key={schedule.id}
                             scheduleId={schedule.id}
-                            time={schedule.startTime}
+                            time={formatDate(new Date(schedule.startTime))}
                             title={schedule.title}
                         />
                     )
                 })}
+            {!isModal && <AddScheduleButton />}
         </div>
     )
 }

@@ -21,7 +21,6 @@ export class ScheduleAPI {
         scheduleId: number,
         userId: number,
     ): Promise<ScheduleData> => {
-        console.log(scheduleId, userId)
         const schedule = await axios.get('/task/detail', {
             params: {
                 id: scheduleId,

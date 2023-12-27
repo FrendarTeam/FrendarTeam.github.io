@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ScheduleModal from './Modals/Schdules/ScheduleModal'
+import HandleIsModal from 'Hooks/Redux/modal'
 
 interface Props {
     scheduleId: number
@@ -10,9 +11,11 @@ interface Props {
 
 export default function Schedule(props: Props) {
     const [isScheduleModal, setIsScheduleModal] = useState<boolean>(false)
+    const { handleModal } = HandleIsModal()
 
     const handleIsScheduleModal = async () => {
         setIsScheduleModal(!isScheduleModal)
+        handleModal()
     }
 
     return (
@@ -23,9 +26,11 @@ export default function Schedule(props: Props) {
                     handleIsScheduleModal={handleIsScheduleModal}
                 />
             )}
-            <div className="flex basis-[30%]">{props.time}</div>
-            <div className="flex flex-col basis-[90%]">
-                <div className="flex flex-row items-center basis-[30%]">
+            <div className="flex    font-light text-sm basis-[30%]">
+                {props.time}
+            </div>
+            <div className="flex flex-col basis-[90%]  w-full">
+                <div className="flex flex-row items-center  basis-[30%]">
                     <div
                         style={{
                             width: '100%',

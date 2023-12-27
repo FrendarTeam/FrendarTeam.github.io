@@ -1,29 +1,24 @@
 import { useCallback, useState } from 'react'
 
-import { setModal } from 'Features/modal-slice'
 import freindIcon from 'Assets/Images/freind.png'
 import FrenidModal from './Modals/Freind/FrenidModal'
 import MenuModal from './Modals/Menu/Menu'
-import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
+import HandleIsModal from 'Hooks/Redux/modal'
 
 export default function Nav() {
     const [isFreindModal, setIsFreindModal] = useState<boolean>(false)
     const [isMenuModal, setIsMenuModal] = useState<boolean>(false)
-    const isModal = useAppSelector((state) => state.modal).value.isModal
+    // const isModal = useAppSelector((state) => state.modal).value.isModal
 
-    const dispatch = useAppDispatch()
-
+    const { handleModal } = HandleIsModal()
     const handleIsFreindModal = useCallback(() => {
-        dispatch(
-            setModal({
-                isModal: !isModal,
-            }),
-        )
         setIsFreindModal(!isFreindModal)
+        handleModal()
     }, [isFreindModal])
 
     const handleIsMenuModal = useCallback(() => {
         setIsMenuModal(!isMenuModal)
+        handleModal()
     }, [isMenuModal])
 
     return (
@@ -37,9 +32,7 @@ export default function Nav() {
             <div className="flex flex-row justify-between items-center px-5 py-3">
                 <div
                     className="flex flex-row items-center"
-                    onClick={() => {
-                        handleIsFreindModal()
-                    }}
+                    onClick={handleIsFreindModal}
                 >
                     <img
                         src={freindIcon}

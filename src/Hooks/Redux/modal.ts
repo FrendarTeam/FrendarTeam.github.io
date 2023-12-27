@@ -1,21 +1,13 @@
 import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
 import { setModal } from 'Features/modal-slice'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 export default function HandleIsModal() {
-    const isModal = useAppSelector((state) => state.modal).value
+    const isModal = useAppSelector((state) => state.modal).value.isModal
     const dispatch = useAppDispatch()
-
-    const handleIsModal = () => {
+    const handleModal = () => {
         dispatch(setModal({ isModal: !isModal }))
     }
 
-    useEffect(() => {
-        handleIsModal()
-        return () => {
-            handleIsModal()
-        }
-    }, [])
-
-    return isModal
+    return { isModal, handleModal }
 }

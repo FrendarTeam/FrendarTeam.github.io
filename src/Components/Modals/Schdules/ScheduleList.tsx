@@ -19,28 +19,28 @@ export default function Schedule(props: Props) {
                 props.scheduleId,
                 Number(userId),
             )
-
-            const mockData: ScheduleData = {
-                id: 0,
-                title: '프렌더 회식',
-                location: '서울특별시 강남구 어딘가 건물',
-                startTime: new Date(),
-                endTime: new Date(),
-                isPrivate: false,
-                hostId: 2,
-                color: 'yellow',
-                participants: [
-                    {
-                        userId: 1,
-                        nickname: 'SUMIN',
-                    },
-                    {
-                        userId: 2,
-                        nickname: 'gwon',
-                    },
-                ],
-            }
-            setScheduleData(mockData)
+            console.log(scheduleData)
+            // const mockData: ScheduleData = {
+            //     id: 0,
+            //     title: '프렌더 회식',
+            //     location: '서울특별시 강남구 어딘가 건물',
+            //     startTime: new Date(),
+            //     endTime: new Date(),
+            //     isPrivate: false,
+            //     hostId: 2,
+            //     color: 'yellow',
+            //     participants: [
+            //         {
+            //             userId: 1,
+            //             nickname: 'SUMIN',
+            //         },
+            //         {
+            //             userId: 2,
+            //             nickname: 'gwon',
+            //         },
+            //     ],
+            // }
+            setScheduleData(scheduleData)
         }
         getScheduleData()
     }, [])
@@ -50,7 +50,7 @@ export default function Schedule(props: Props) {
             if (prev) {
                 return {
                     ...prev,
-                    isPrivate: !prev.isPrivate,
+                    isPrivate: !prev.task.isPrivate,
                 }
             }
             return prev
@@ -76,7 +76,7 @@ export default function Schedule(props: Props) {
                         fontSize: '30px',
                     }}
                 >
-                    {scheduleData.title}
+                    {scheduleData.task.title}
                 </p>
             </div>
             <div className="flex  flex-col w-4/5 ">
@@ -86,7 +86,7 @@ export default function Schedule(props: Props) {
                         fontSize: '24px',
                     }}
                 >
-                    {scheduleData.location}
+                    {scheduleData.task.location}
                 </p>
             </div>
             <div className="flex  flex-row w-4/5 ">
@@ -97,7 +97,7 @@ export default function Schedule(props: Props) {
                             fontSize: '16px',
                         }}
                     >
-                        {formatDate(scheduleData.startTime)}
+                        {formatDate(new Date(scheduleData.task.startTime))}
                     </p>
                 </div>
                 <div className="flex flex-col w-full">
@@ -107,7 +107,7 @@ export default function Schedule(props: Props) {
                             fontSize: '16px',
                         }}
                     >
-                        {formatDate(scheduleData.endTime)}
+                        {formatDate(new Date(scheduleData.task.endTime))}
                     </p>
                 </div>
             </div>
@@ -122,7 +122,7 @@ export default function Schedule(props: Props) {
                 <p className="header">공개 여부</p>
                 <Toggle
                     id="cheese-status"
-                    defaultChecked={scheduleData.isPrivate}
+                    defaultChecked={scheduleData.task.isPrivate}
                     onChange={handleAlarmToggle}
                 />
             </div>
@@ -131,7 +131,7 @@ export default function Schedule(props: Props) {
                     <p className="header">참여자</p>
                 </div>
                 <div className="flex flex-row gap-4">
-                    {scheduleData.participants.map((participant) => {
+                    {scheduleData.task.participants.map((participant) => {
                         return (
                             <div
                                 key={participant.userId}
