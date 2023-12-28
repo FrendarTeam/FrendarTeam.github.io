@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default function AddScheduleButton() {
+    const handleIsAddScheduleModal = () => {}
+
     return (
         <div
             className="
@@ -13,6 +15,7 @@ export default function AddScheduleButton() {
         bg-lime-400
         rounded-full
         "
+            onClick={handleIsAddScheduleModal}
         >
             <div
                 className="
