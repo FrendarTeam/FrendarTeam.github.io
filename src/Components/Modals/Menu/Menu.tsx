@@ -30,12 +30,16 @@ export default function MenuModal(props: Props) {
                 }}
                 onClick={() => {
                     setModal(false)
-                    setTimeout(() => {
-                        props.handleIsMenuModal()
-                    }, 200)
+
+                    props.handleIsMenuModal()
                 }}
             ></div>
-            <CSSTransition in={modal} nodeRef={nodeRef} timeout={200} classNames={'menu-modal'}>
+            <CSSTransition
+                in={modal}
+                nodeRef={nodeRef}
+                timeout={200}
+                classNames={'menu-modal'}
+            >
                 <div
                     ref={nodeRef}
                     id={'content'}

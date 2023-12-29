@@ -41,9 +41,7 @@ export default function FrenidModal(props: Props) {
                 }}
                 onClick={(e) => {
                     setModal(false)
-                    setTimeout(() => {
-                        props.handleIsFreindModal()
-                    }, 200)
+                    props.handleIsFreindModal()
                 }}
             ></div>
             {/* content */}

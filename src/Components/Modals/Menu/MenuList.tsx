@@ -72,6 +72,7 @@ export default function MenuList() {
                         {mainColor.map((color) => {
                             return (
                                 <MainColor
+                                    key={color}
                                     color={color}
                                     handleColor={handleColor}
                                 />

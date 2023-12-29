@@ -19,27 +19,7 @@ export default function Schedule(props: Props) {
                 props.scheduleId,
                 Number(userId),
             )
-            console.log(scheduleData)
-            // const mockData: ScheduleData = {
-            //     id: 0,
-            //     title: '프렌더 회식',
-            //     location: '서울특별시 강남구 어딘가 건물',
-            //     startTime: new Date(),
-            //     endTime: new Date(),
-            //     isPrivate: false,
-            //     hostId: 2,
-            //     color: 'yellow',
-            //     participants: [
-            //         {
-            //             userId: 1,
-            //             nickname: 'SUMIN',
-            //         },
-            //         {
-            //             userId: 2,
-            //             nickname: 'gwon',
-            //         },
-            //     ],
-            // }
+
             setScheduleData(scheduleData)
         }
         getScheduleData()

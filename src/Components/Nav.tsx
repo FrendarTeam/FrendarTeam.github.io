@@ -12,13 +12,23 @@ export default function Nav() {
 
     const { handleModal } = HandleIsModal()
     const handleIsFreindModal = useCallback(() => {
-        setIsFreindModal(!isFreindModal)
+        console.log('handle')
         handleModal()
+        const time = setTimeout(() => {
+            setIsFreindModal(!isFreindModal)
+        }, 200)
+
+        return () => clearTimeout(time)
     }, [isFreindModal])
 
     const handleIsMenuModal = useCallback(() => {
-        setIsMenuModal(!isMenuModal)
         handleModal()
+
+        const time = setTimeout(() => {
+            setIsMenuModal(!isMenuModal)
+        }, 200)
+
+        return () => clearTimeout(time)
     }, [isMenuModal])
 
     return (

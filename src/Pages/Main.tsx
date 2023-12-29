@@ -23,6 +23,10 @@ export default function Main() {
     const [schedules, setSchedules] = useState<Schedules | null>(null)
 
     useEffect(() => {
+        console.log('isModal', isModal)
+    }, [isModal])
+
+    useEffect(() => {
         const getSchedules = async () => {
             const startTime = new Date(
                 new Date().getDate() - 1000,

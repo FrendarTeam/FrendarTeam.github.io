@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import ScheduleModal from './Modals/Schdules/ScheduleModal'
 import HandleIsModal from 'Hooks/Redux/modal'
+// import HandleIsModal from 'Hooks/Redux/modal'
 
 interface Props {
     scheduleId: number
@@ -13,10 +14,14 @@ export default function Schedule(props: Props) {
     const [isScheduleModal, setIsScheduleModal] = useState<boolean>(false)
     const { handleModal } = HandleIsModal()
 
-    const handleIsScheduleModal = async () => {
-        setIsScheduleModal(!isScheduleModal)
+    const handleIsScheduleModal = useCallback(() => {
         handleModal()
-    }
+        const time = setTimeout(() => {
+            setIsScheduleModal(!isScheduleModal)
+        }, 200)
+
+        return () => clearTimeout(time)
+    }, [isScheduleModal])
 
     return (
         <div className="px-5 pt-3 flex flex-row">

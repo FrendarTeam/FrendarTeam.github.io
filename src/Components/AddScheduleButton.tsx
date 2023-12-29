@@ -1,7 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AddScheduleButton() {
-    const handleIsAddScheduleModal = () => {}
+    const navigate = useNavigate()
+
+    const handleIsAddScheduleModal = () => {
+        navigate('/schedule/add')
+    }
 
     return (
         <div
