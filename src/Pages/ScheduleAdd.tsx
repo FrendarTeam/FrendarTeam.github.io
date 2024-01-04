@@ -1,5 +1,15 @@
+import FrenidModal from 'Components/Modals/Freind/FrenidModal'
+import FreindAddModal from 'Components/Modals/Schdules/Freind/FreindAddModal'
 import Nav from 'Components/Nav'
-import React, { useState } from 'react'
+import Participation from 'Components/Schedule/Participation'
+import { useAppSelector } from 'Hooks/Redux'
+import HandleIsModal from 'Hooks/Redux/modal'
+import { ScheduleAPI } from 'Scripts/Schdule'
+import mainColor from 'Types/Enum/main-color'
+import { color } from 'Types/Enum/main-color'
+import { Freinds } from 'Types/Freind/freinds'
+import React, { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Toggle from 'react-toggle'
 
 export default function ScheduleAdd() {
@@ -8,27 +18,93 @@ export default function ScheduleAdd() {
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [isPrivate, setIsPrivate] = useState(false)
-    const [participants, setParticipants] = useState([])
+    const [participants, setParticipants] = useState<Freinds[]>([])
+    const [color, setColor] = useState<color>('')
+
+    const user = useAppSelector((state) => state.user).value
+    const navigete = useNavigate()
+
+    const [isFreindModal, setIsFreindModal] = useState<boolean>(false)
+
+    const { handleModal } = HandleIsModal()
 
     const handleIsPrivate = () => {
         setIsPrivate(!isPrivate)
     }
 
     // 폼 제출 핸들러
-    const handleClick = (event: any) => {
+    const handleClick = useCallback(async () => {
         const submitForm = {
             title,
             location,
             startTime,
             endTime,
             isPrivate,
+            participants: participants.map((participant) => participant.id),
+            color,
         }
-        console.log('submitForm', submitForm)
+
+        const isEmptyValue = Object.values(submitForm).some(
+            (value) => value === '',
+        )
+
+        if (isEmptyValue) {
+            alert('빈칸을 채워주세요')
+            return
+        }
+
+        const isSuccessAddSchedule = await ScheduleAPI.addSchedule(submitForm)
+
+        if (isSuccessAddSchedule) {
+            alert('일정 추가 성공!')
+        }
+
+        if (!isSuccessAddSchedule) {
+            alert('에러가 발생했습니다!')
+        }
+
+        navigete('/schedule/' + user.userId)
+    }, [title, location, startTime, endTime, isPrivate, participants, color])
+
+    const handleIsFreindModal = useCallback(() => {
+        setIsFreindModal(!isFreindModal)
+        handleModal()
+        const time = setTimeout(() => {
+            setIsFreindModal(!isFreindModal)
+        }, 200)
+
+        return () => clearTimeout(time)
+    }, [isFreindModal])
+
+    const handleAddFreind = (freind: Freinds) => {
+        console.log('click')
+        setParticipants((prev) => [...prev, freind])
+    }
+
+    const handleDeleteFreind = (freindId: number) => {
+        setParticipants((prev) =>
+            prev.filter((participant) => participant.id !== freindId),
+        )
+    }
+
+    const handleSelectColor = (color: string) => {
+        setColor(color)
     }
 
     return (
         <div>
             <Nav />
+            {isFreindModal && (
+                <FreindAddModal
+                    handleIsFreindModal={handleIsFreindModal}
+                    handleAddFreind={handleAddFreind}
+                    existFreindIds={participants.map(
+                        (participant: Freinds) => participant.id,
+                    )}
+                />
+            )}
+            {/* 참여자 목록 모달 */}
+
             <div className="flex w-full flex-col  items-center justify-center h-full gap-2">
                 <div className="flex flex-col  w-4/5">
                     <label htmlFor="title" className="header">
@@ -89,7 +165,80 @@ export default function ScheduleAdd() {
                     {/* 참여자 리스트 관리 로직 추가 필요 */}
                     <div className="flex flex-col mt-4">
                         <p className="header">참여자</p>
-                        {/* 참여자 관리 로직 */}
+
+                        <div
+                            className="
+                                flex w-full
+                                justify-start
+                                h-2/5
+                                gap-3
+                            "
+                        >
+                            {participants.map((participant) => {
+                                return (
+                                    <Participation
+                                        key={participant.id}
+                                        nickname={participant.nickname}
+                                        profileUrl={participant.profileUrl}
+                                        handleDelete={() => {
+                                            handleDeleteFreind(participant.id)
+                                        }}
+                                    />
+                                )
+                            })}
+                            <button
+                                type="button"
+                                className="rounded w-1/5 h-9 bg-blue-500 text-white p-2"
+                                onClick={() => handleIsFreindModal()}
+                            >
+                                추가
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label htmlFor="color" className="header">
+                            Color
+                        </label>
+                        <div className="flex flex-row justify-between">
+                            {mainColor.map((c) => {
+                                const isSelectedColor = color === c
+                                return (
+                                    <div key={c}>
+                                        {isSelectedColor && (
+                                            <div
+                                                className="
+                                                w-10 h-10 rounded-full
+                                                border-2
+                                                border-blue-500
+
+                                                "
+                                                style={{
+                                                    backgroundColor: c,
+                                                }}
+                                                onClick={() =>
+                                                    handleSelectColor(c)
+                                                }
+                                            ></div>
+                                        )}
+                                        {!isSelectedColor && (
+                                            <div
+                                                className="
+                                                w-10 h-10 rounded-full
+                                                
+                                                "
+                                                style={{
+                                                    backgroundColor: c,
+                                                }}
+                                                onClick={() =>
+                                                    handleSelectColor(c)
+                                                }
+                                            ></div>
+                                        )}
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
 
                     <button

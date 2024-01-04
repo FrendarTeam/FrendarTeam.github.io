@@ -31,3 +31,13 @@ export interface Schedules {
         isPrivate: boolean
     }[]
 }
+
+export interface AddSchedule {
+    title: string
+    location: string
+    startTime: string
+    endTime: string
+    isPrivate: boolean
+    color: string
+    participants: number[]
+}

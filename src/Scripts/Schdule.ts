@@ -1,4 +1,8 @@
-import { ScheduleData, Schedules } from 'Types/Schedule/scheduleData'
+import {
+    AddSchedule,
+    ScheduleData,
+    Schedules,
+} from 'Types/Schedule/scheduleData'
 import axios from './index'
 
 export class ScheduleAPI {
@@ -28,5 +32,16 @@ export class ScheduleAPI {
             },
         })
         return schedule.data.data
+    }
+
+    static addSchedule = async (addSchedule: AddSchedule): Promise<boolean> => {
+        try {
+            await axios.post('/task', {
+                ...addSchedule,
+            })
+            return true
+        } catch (e) {
+            return false
+        }
     }
 }

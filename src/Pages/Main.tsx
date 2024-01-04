@@ -21,17 +21,15 @@ export default function Main() {
     const isModal = useAppSelector((state) => state.modal).value.isModal
     const { userId } = useParams()
     const [schedules, setSchedules] = useState<Schedules | null>(null)
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date())
 
     useEffect(() => {
-        console.log('isModal', isModal)
-    }, [isModal])
-
-    useEffect(() => {
+        const tomorrow = new Date(
+            selectedDate.setDate(selectedDate.getDate() + 1),
+        )
         const getSchedules = async () => {
-            const startTime = new Date(
-                new Date().getDate() - 1000,
-            ).toISOString()
-            const endTime = new Date().toISOString()
+            const startTime = new Date(selectedDate).toISOString()
+            const endTime = tomorrow.toISOString()
             const shcedules = await ScheduleAPI.getSchedules(
                 Number(userId),
                 startTime,
@@ -40,7 +38,7 @@ export default function Main() {
             setSchedules(shcedules)
         }
         getSchedules()
-    }, [])
+    }, [selectedDate])
 
     useEffect(() => {
         const getUser = async () => {
@@ -76,6 +74,10 @@ export default function Main() {
                     navigationLabel={({ date, label, locale, view }) => {
                         return `${date.getFullYear()} - ${date.getMonth() + 1} `
                     }}
+                    onClickDay={(value) => {
+                        const date = new Date(value).toISOString()
+                        setSelectedDate(new Date(date))
+                    }}
                     next2Label={null}
                     prev2Label={null}
                     calendarType="iso8601"
@@ -90,6 +92,7 @@ export default function Main() {
                             scheduleId={schedule.id}
                             time={formatDate(new Date(schedule.startTime))}
                             title={schedule.title}
+                            color={schedule.color}
                         />
                     )
                 })}

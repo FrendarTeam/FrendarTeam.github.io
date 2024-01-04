@@ -17,7 +17,6 @@ export default function MenuList() {
 
     const dispatch = useAppDispatch()
 
-    const mainColor = mainColors
     const user = useAppSelector((state) => state.user)
 
     const handleAlarmToggle = useCallback(async () => {
@@ -55,7 +54,7 @@ export default function MenuList() {
 
                 <div className="flex  ">{user.value.nickname}</div>
             </div>
-            <div className="flex flex-col h-3/5 items-center justify-around bg-slate-400  w-full">
+            <div className="flex flex-col h-3/5 items-center justify-around   w-full">
                 <div className="flex"> 회원정보 변경</div>
                 <div className="flex">
                     알림 설정
@@ -69,7 +68,7 @@ export default function MenuList() {
                 <div className="flex flex-col items-center">
                     color
                     <div className="flex flex-row gap-3">
-                        {mainColor.map((color) => {
+                        {['black', 'white'].map((color) => {
                             return (
                                 <MainColor
                                     key={color}
