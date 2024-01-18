@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
 import { UserAPI } from 'Scripts/User'
-import React, { useCallback, useState } from 'react'
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react'
 import Toggle from 'react-toggle'
 import 'react-toggle/style.css' // for ES6 modules
 import mainColors from 'Types/Enum/main-color'
@@ -34,6 +34,25 @@ export default function MenuList() {
         await UserAPI.updateMainColor(color)
     }, [])
 
+    const fileInputRef = useRef<HTMLInputElement>(null)
+
+    const handleImageClick = () => {
+        fileInputRef?.current?.click()
+    }
+
+    const handleFileChange = (event: any) => {
+        if (!event) {
+            return
+        }
+
+        // 파일이 선택되었을 때 처리할 로직
+
+        const file = event.target.files[0]
+
+        const formData = new FormData()
+        formData.append('file', file)
+    }
+
     return (
         <div className="flex  h-full flex-col  w-full pt-8  pb-8">
             <div className="flex flex-col items-center justify-around h-2/5   w-full ">
@@ -45,10 +64,17 @@ export default function MenuList() {
                         items-center
                         "
                 >
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        style={{ display: 'none' }}
+                    />
                     <img
                         className="flex h-32 w-32 object-cover rounded-full"
                         src={user.value.profileUrl}
                         alt="d"
+                        onClick={handleImageClick}
                     ></img>
                 </div>
 

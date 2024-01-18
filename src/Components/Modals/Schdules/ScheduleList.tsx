@@ -4,7 +4,9 @@ import React, { useEffect, useState } from 'react'
 import Toggle from 'react-toggle'
 import './schedule.css'
 import { ScheduleAPI } from 'Scripts/Schdule'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import pencil from 'Assets/Images/pencil.png'
+import trash from 'Assets/Images/trash.png'
 
 interface Props {
     scheduleId: number
@@ -12,6 +14,8 @@ interface Props {
 
 export default function Schedule(props: Props) {
     const [scheduleData, setScheduleData] = useState<ScheduleData>()
+    const navigate = useNavigate()
+
     const { userId } = useParams()
     useEffect(() => {
         const getScheduleData = async () => {
@@ -49,6 +53,28 @@ export default function Schedule(props: Props) {
         gap-2
         "
         >
+            <div
+                style={{
+                    width: '80%',
+                }}
+            >
+                <div className="flex flex-row justify-end gap-3">
+                    <img
+                        src={pencil}
+                        className=" w-6"
+                        alt="pencil"
+                        onClick={() =>
+                            navigate(
+                                '/schedule/edit/' +
+                                    props.scheduleId +
+                                    '?userId=' +
+                                    userId,
+                            )
+                        }
+                    />
+                    <img src={trash} className="w-6" alt="trash" />
+                </div>
+            </div>
             <div className="flex  flex-col w-4/5 ">
                 <p className="header">Title</p>
                 <p

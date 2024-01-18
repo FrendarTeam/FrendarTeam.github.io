@@ -24,12 +24,19 @@ export default function Main() {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date())
 
     useEffect(() => {
+        const today = new Date(selectedDate.setHours(9, 0, 0, 0)).toISOString()
         const tomorrow = new Date(
-            selectedDate.setDate(selectedDate.getDate() + 1),
-        )
+            new Date(new Date().setDate(selectedDate.getDate() + 1)).setHours(
+                9,
+                0,
+                0,
+                0,
+            ),
+        ).toISOString()
+        console.log('tomorrow', tomorrow)
         const getSchedules = async () => {
-            const startTime = new Date(selectedDate).toISOString()
-            const endTime = tomorrow.toISOString()
+            const startTime = today
+            const endTime = tomorrow
             const shcedules = await ScheduleAPI.getSchedules(
                 Number(userId),
                 startTime,

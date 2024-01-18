@@ -31,6 +31,15 @@ export default function Auth() {
                         code: user.code,
                     }),
                 )
+                localStorage.setItem(
+                    'me',
+                    JSON.stringify({
+                        userId: user.id,
+                        nickname: user.nickname,
+                        profileUrl: user.profileUrl,
+                        code: user.code,
+                    }),
+                )
             }
             getUser()
             navigate('/main')

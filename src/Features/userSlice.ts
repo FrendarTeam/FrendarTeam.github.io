@@ -4,7 +4,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         value: {
-            userId: undefined,
+            userId: -1,
             nickname: undefined,
             profileUrl: undefined,
             themeColor: 'white',
