@@ -40,15 +40,11 @@ export default function Auth() {
                         code: user.code,
                     }),
                 )
+                navigate('/schedule/' + user.id)
             }
             getUser()
-            navigate('/main')
         }
     }, [])
-
-    if (accessToken && refreshToken) {
-        navigate('/main')
-    }
 
     if (query) {
         const code = query.get('code')
@@ -61,6 +57,7 @@ export default function Auth() {
                         // 쿠키에 토큰 저장
                         document.cookie = `AccessToken=${tokens.accessToken}`
                         document.cookie = `RefreshToken=${tokens.refreshToken}`
+                        navigate(0)
                     }),
                 )
                 .catch((err) => console.log(err))

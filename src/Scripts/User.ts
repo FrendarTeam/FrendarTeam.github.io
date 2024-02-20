@@ -19,5 +19,17 @@ export class UserAPI {
         }
     }
 
+    static updateUser = async (user: any) => {
+        try {
+            console.log(user)
+            const result = await axios.put('/user', user, {
+                data: FormData,
+            })
+            return result.data.data.user
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     static updateMainColor = async (color: string) => {}
 }

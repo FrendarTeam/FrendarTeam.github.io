@@ -56,9 +56,9 @@ export default function ScheduleEdit() {
             // setParticipants(schedule.task.participants)
             setColor(schedule.task.color)
 
-            for (const participant of schedule.task.participants) {
-                const user = await UserAPI.getUser(participant.userId)
-            }
+            // for (const participant of schedule.task.participants) {
+            //     const user = await UserAPI.getUser(participant.userId)
+            // }
         }
 
         handleForm()
