@@ -5,6 +5,7 @@ import './freind-modal.css'
 import { CSSTransition } from 'react-transition-group'
 import { Freinds } from 'Types/Freind/freinds'
 import { FriendAPI } from 'Scripts/Freind'
+import { getDarkMode } from 'Hooks/Dark'
 
 interface Props {
     handleIsFreindModal: () => void
@@ -12,18 +13,26 @@ interface Props {
 
 export default function FrenidModal(props: Props) {
     const [modal, setModal] = useState(false)
-    const [freinds, setFreinds] = useState<Freinds[]>([])
+    const [friends, setFriends] = useState<Freinds[]>([])
 
     const nodeRef = useRef(null)
 
     useEffect(() => {
         const getFreinds = async () => {
             const freindsData = await FriendAPI.getFriends()
-            setFreinds(freindsData)
+            setFriends(freindsData)
         }
         getFreinds()
         setModal(true)
     }, [])
+
+    const handleFreinds = () => {
+        const getFreinds = async () => {
+            const freindsData = await FriendAPI.getFriends()
+            setFriends(freindsData)
+        }
+        getFreinds()
+    }
 
     return (
         // transition
@@ -68,20 +77,24 @@ export default function FrenidModal(props: Props) {
 
                         justifyContent: 'center',
                         overflow: 'auto',
-                        backgroundColor: 'white',
+                        backgroundColor: `${
+                            getDarkMode() ? '#202020' : 'white'
+                        }`,
                     }}
                 >
                     <div className="flex flex-col w-full    h-full justify-end items-center">
                         <div className="flex w-5/6 items-center   h-1/5">
-                            <AddFreind />
+                            <AddFreind handleFreinds={handleFreinds} />
                         </div>
                         <div className="flex w-full h-5/6 flex-col  overflow-scroll items-center">
-                            {freinds.map((freind) => {
+                            {friends.map((freind) => {
                                 return (
                                     <FreindContaiter
                                         key={freind.id}
+                                        friendId={freind.friendId}
                                         nickname={freind.nickname}
                                         profileUrl={freind.profileUrl}
+                                        handleFreinds={handleFreinds}
                                     />
                                 )
                             })}

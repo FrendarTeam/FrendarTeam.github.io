@@ -31,8 +31,6 @@ export default function ScheduleEdit() {
 
     const [isFreindModal, setIsFreindModal] = useState<boolean>(false)
 
-    console.log(startTime)
-
     useEffect(() => {
         const handleForm = async () => {
             if (!scheduleId || !Number(scheduleId) || !userId) {
@@ -92,10 +90,14 @@ export default function ScheduleEdit() {
             return
         }
 
-        const isSuccessAddSchedule = await ScheduleAPI.addSchedule(submitForm)
+        if (!scheduleId) return alert('일정 아이디가 없습니다')
+        const isSuccessAddSchedule = await ScheduleAPI.updateSchedule(
+            +scheduleId,
+            submitForm,
+        )
 
         if (isSuccessAddSchedule) {
-            alert('일정 추가 성공!')
+            alert('일정 수정 성공!')
         }
 
         if (!isSuccessAddSchedule) {
@@ -116,7 +118,6 @@ export default function ScheduleEdit() {
     }, [isFreindModal])
 
     const handleAddFreind = (freind: Freinds) => {
-        console.log('click')
         setParticipants((prev) => [...prev, freind])
     }
 

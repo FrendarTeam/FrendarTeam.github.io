@@ -3,6 +3,7 @@ import './menu-modal.css'
 import { CSSTransition } from 'react-transition-group'
 import MenuList from './MenuList'
 import { useAppSelector } from 'Hooks/Redux'
+import { getDarkMode } from 'Hooks/Dark'
 
 interface Props {
     handleIsMenuModal: () => void
@@ -47,7 +48,7 @@ export default function MenuModal(props: Props) {
                         width: '80%',
                         height: '100%',
                         zIndex: '150',
-                        position: 'absolute',
+                        position: 'fixed',
                         top: '0',
                         right: '0',
                         // transform: !modal ? 'translate(-100%, 0%)' : '',
@@ -56,7 +57,9 @@ export default function MenuModal(props: Props) {
 
                         justifyContent: 'center',
                         overflow: 'auto',
-                        backgroundColor: 'white',
+                        backgroundColor: `${
+                            getDarkMode() ? '#202020' : 'white'
+                        }`,
                     }}
                 >
                     <div className="flex flex-col w-full    h-full justify-center  items-center">

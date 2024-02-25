@@ -1,6 +1,6 @@
 export type Freinds = {
     id: number
-    freindId: number
+    friendId: number
     nickname: string
     profileUrl: string
 }

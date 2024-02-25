@@ -1,4 +1,4 @@
-import 'react-calendar/dist/Calendar.css'
+// import 'react-calendar/dist/Calendar.css'
 import 'Assets/Css/Calendar.css'
 
 import { useAppDispatch, useAppSelector } from 'Hooks/Redux'
@@ -18,27 +18,28 @@ import AddScheduleButton from 'Components/AddScheduleButton'
 export default function Main() {
     const dispatch = useAppDispatch()
     const user = useAppSelector((state) => state.user).value
+    const [isDark, setIsDark] = useState(false)
     const isModal = useAppSelector((state) => state.modal).value.isModal
-    const { userId } = useParams()
+
     const [schedules, setSchedules] = useState<Schedules | null>(null)
     const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+
+    const [allUserScheduleDates, setAllUserScheduleDates] = useState<Schedules>(
+        {
+            task: [],
+        },
+    )
 
     useEffect(() => {
         const today = new Date(selectedDate.setHours(9, 0, 0, 0)).toISOString()
         const tomorrow = new Date(
-            new Date(new Date().setDate(selectedDate.getDate() + 1)).setHours(
-                9,
-                0,
-                0,
-                0,
-            ),
+            selectedDate.setDate(selectedDate.getDate() + 1),
         ).toISOString()
-        console.log('tomorrow', tomorrow)
         const getSchedules = async () => {
             const startTime = today
             const endTime = tomorrow
             const shcedules = await ScheduleAPI.getSchedules(
-                Number(userId),
+                Number(user.userId),
                 startTime,
                 endTime,
             )
@@ -61,17 +62,42 @@ export default function Main() {
             )
         }
 
+        const getIsDark = () => {
+            const color = localStorage.getItem('color')
+            if (color === 'black') {
+                setIsDark(true)
+            } else {
+                setIsDark(false)
+            }
+        }
+
+        const getAllUserScheduleDates = async () => {
+            const allUserScheduleDates =
+                await ScheduleAPI.getAllUserScheduleDates(
+                    Number(user.userId),
+                    selectedDate.toISOString(),
+                )
+            setAllUserScheduleDates(allUserScheduleDates)
+        }
+
         if (!user.userId) {
             getUser()
         }
-    }, [])
+        getIsDark()
+        getAllUserScheduleDates()
+    }, [user])
 
     return (
-        <div className="flex flex-col flex-1">
+        <div
+            className={`flex flex-col flex-1
+            ${isDark ? 'bg-slate-700   text-slate-300' : ''}
+        `}
+        >
             <Nav />
 
-            <div className="flex justify-center">
+            <div className="flex justify-center ">
                 <Calendar
+                    className={`${isDark ? 'bg-slate-800 text-slate-300' : ''}`}
                     formatDay={(locale, date) => {
                         if (date.getDate() < 10) {
                             return '0' + date.getDate().toString()
@@ -84,6 +110,44 @@ export default function Main() {
                     onClickDay={(value) => {
                         const date = new Date(value).toISOString()
                         setSelectedDate(new Date(date))
+                    }}
+                    tileClassName={({ date, view }) => {
+                        if (allUserScheduleDates) {
+                            const isSchedule = allUserScheduleDates.task.some(
+                                (schedule) => {
+                                    const startTime = new Date(
+                                        new Date(schedule.startTime).setHours(
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                        ),
+                                    )
+                                    const endTime = new Date(
+                                        new Date(schedule.endTime).setHours(
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                        ),
+                                    )
+
+                                    // console.log('fail')
+                                    // console.log('date :', date)
+                                    // console.log('startTime :', startTime)
+                                    // console.log('endTime :', endTime)
+                                    return (
+                                        new Date(date) >= startTime &&
+                                        new Date(date) <= endTime
+                                    )
+                                },
+                            )
+                            // console.log(isSchedule, date)
+                            if (isSchedule) {
+                                return 'has-schedule'
+                            }
+                        }
+                        return ''
                     }}
                     next2Label={null}
                     prev2Label={null}

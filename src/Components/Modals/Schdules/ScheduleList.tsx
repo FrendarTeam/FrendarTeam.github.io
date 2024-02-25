@@ -7,6 +7,7 @@ import { ScheduleAPI } from 'Scripts/Schdule'
 import { useNavigate, useParams } from 'react-router-dom'
 import pencil from 'Assets/Images/pencil.png'
 import trash from 'Assets/Images/trash.png'
+import { getDarkMode } from 'Hooks/Dark'
 
 interface Props {
     scheduleId: number
@@ -41,6 +42,23 @@ export default function Schedule(props: Props) {
         })
     }
 
+    const handleDelete = async () => {
+        const confirm = window.confirm('일정을 삭제하시겠습니까?')
+        if (confirm) {
+            const isSuccessDelete = await ScheduleAPI.deleteSchedule(
+                props.scheduleId,
+            )
+            if (isSuccessDelete) {
+                alert('일정 삭제 성공!')
+            }
+
+            if (!isSuccessDelete) {
+                alert('에러가 발생했습니다!')
+            }
+            navigate(0)
+        }
+    }
+
     if (!scheduleData) return <></>
 
     return (
@@ -72,7 +90,12 @@ export default function Schedule(props: Props) {
                             )
                         }
                     />
-                    <img src={trash} className="w-6" alt="trash" />
+                    <img
+                        src={trash}
+                        className="w-6"
+                        alt="trash"
+                        onClick={handleDelete}
+                    />
                 </div>
             </div>
             <div className="flex  flex-col w-4/5 ">

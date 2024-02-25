@@ -12,18 +12,26 @@ interface Props {
 
 export default function FreindAddModal(props: Props) {
     const [modal, setModal] = useState(false)
-    const [freinds, setFreinds] = useState<Freinds[]>([])
+    const [friends, setFriends] = useState<Freinds[]>([])
 
     const nodeRef = useRef(null)
 
     useEffect(() => {
         const getFreinds = async () => {
             const freindsData = await FriendAPI.getFriends()
-            setFreinds(freindsData)
+            setFriends(freindsData)
         }
         getFreinds()
         setModal(true)
     }, [])
+
+    const handleFreinds = () => {
+        const getFreinds = async () => {
+            const freindsData = await FriendAPI.getFriends()
+            setFriends(freindsData)
+        }
+        getFreinds()
+    }
 
     return (
         // transition
@@ -72,7 +80,7 @@ export default function FreindAddModal(props: Props) {
                 >
                     <div className="flex flex-col w-full    h-full justify-end items-center">
                         <div className="flex w-full h-5/6 flex-col  overflow-scroll items-center">
-                            {freinds.map((freind) => {
+                            {friends.map((freind) => {
                                 let isExist = false
                                 if (props.existFreindIds.includes(freind.id)) {
                                     isExist = true
@@ -83,8 +91,10 @@ export default function FreindAddModal(props: Props) {
                                         key={freind.id}
                                     >
                                         <FreindContaiter
+                                            friendId={freind.friendId}
                                             nickname={freind.nickname}
                                             profileUrl={freind.profileUrl}
+                                            handleFreinds={handleFreinds}
                                         />
                                         {!isExist && (
                                             <button

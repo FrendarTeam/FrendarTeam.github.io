@@ -12,9 +12,14 @@ import Toggle from 'react-toggle'
 import 'react-toggle/style.css' // for ES6 modules
 import MainColor from './MainColor'
 import { set } from 'Features/userSlice'
+import { getDarkMode } from 'Hooks/Dark'
 
 export default function MenuList() {
     const [isSetUserModal, setisSetUserModal] = useState<boolean>(false)
+
+    const user = useAppSelector((state) => state.user)
+
+    useEffect(() => {}, [])
 
     const [userData, setUserData] = useState<{
         name: string
@@ -33,7 +38,6 @@ export default function MenuList() {
 
     const dispatch = useAppDispatch()
 
-    const user = useAppSelector((state) => state.user)
     useEffect(() => {
         const updateUserData = () => {
             if (user.value.nickname) {
@@ -75,6 +79,7 @@ export default function MenuList() {
         // 파일이 선택되었을 때 처리할 로직
 
         const file = event.target.files[0]
+        console.log(URL.createObjectURL(file))
 
         const formData = new FormData()
         formData.append('file', file)
@@ -98,6 +103,14 @@ export default function MenuList() {
 
         // API 호출 시 FormData 객체 사용
         await UserAPI.updateUser(formData)
+
+        const updatedUser = await UserAPI.getUser()
+        dispatch(
+            set({
+                ...user.value,
+                profileUrl: updatedUser.profileUrl,
+            }),
+        )
     }
 
     if (isSetUserModal) {
@@ -132,7 +145,9 @@ export default function MenuList() {
 
                         <div className="flex items-center border-2  p-2 rounded-2xl	   border-solid">
                             <input
-                                className="  text-center"
+                                className={`  text-center ${
+                                    getDarkMode() ? '#202020' : ''
+                                }`}
                                 type="text"
                                 value={userData.name}
                                 onChange={(e) => {
@@ -144,11 +159,16 @@ export default function MenuList() {
                                     })
                                 }}
                                 name="nickname"
+                                style={{
+                                    backgroundColor: getDarkMode()
+                                        ? '#202020'
+                                        : '',
+                                }}
                             />
                         </div>
                         <div className="flex items-center border-2  p-2 rounded-2xl	   border-solid">
                             <input
-                                className="  text-center"
+                                className={`  text-center `}
                                 type="text"
                                 value={userData.birthday}
                                 onChange={(e) => {
@@ -160,6 +180,11 @@ export default function MenuList() {
                                     })
                                 }}
                                 name="birthday"
+                                style={{
+                                    backgroundColor: getDarkMode()
+                                        ? '#202020'
+                                        : '',
+                                }}
                             />
                         </div>
                         <div className="flex w-full justify-center">
@@ -177,7 +202,7 @@ export default function MenuList() {
         )
     }
     return (
-        <div className="flex  h-full flex-col  w-full pt-8  pb-8">
+        <div className="flex  h-full flex-col justify-around  w-full pt-8  pb-8">
             <div className="flex flex-col items-center justify-around h-2/5   w-full ">
                 <div
                     className="
@@ -203,11 +228,11 @@ export default function MenuList() {
 
                 <div className="flex  ">{user.value.nickname}</div>
             </div>
-            <div className="flex flex-col h-3/5 items-center justify-around   w-full">
+            <div className="flex flex-col h-2/5 items-center justify-around    w-full">
                 <div className="flex " onClick={handleSetUserStatus}>
                     회원정보 변경
                 </div>
-                <div className="flex">
+                <div className="flex flex-col">
                     알림 설정
                     <Toggle
                         id="cheese-status"

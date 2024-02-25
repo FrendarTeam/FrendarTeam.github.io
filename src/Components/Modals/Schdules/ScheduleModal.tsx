@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import './schedule-modal.css'
 import Schedule from './ScheduleList'
+import { getDarkMode } from 'Hooks/Dark'
 
 interface Props {
     scheduleId: number
@@ -71,6 +72,9 @@ export default function ScheduleModal(props: Props) {
                     h-full
                     justify-center
                     "
+                        style={{
+                            backgroundColor: getDarkMode() ? '#202020' : '',
+                        }}
                     >
                         <Schedule scheduleId={props.scheduleId} />
                     </div>

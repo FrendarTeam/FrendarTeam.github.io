@@ -2,6 +2,7 @@ import FrenidModal from 'Components/Modals/Freind/FrenidModal'
 import FreindAddModal from 'Components/Modals/Schdules/Freind/FreindAddModal'
 import Nav from 'Components/Nav'
 import Participation from 'Components/Schedule/Participation'
+import { getDarkMode } from 'Hooks/Dark'
 import { useAppSelector } from 'Hooks/Redux'
 import HandleIsModal from 'Hooks/Redux/modal'
 import { ScheduleAPI } from 'Scripts/Schdule'
@@ -62,8 +63,11 @@ export default function ScheduleAdd() {
         if (!isSuccessAddSchedule) {
             alert('에러가 발생했습니다!')
         }
+        if (!user.userId) {
+            navigete('/auth')
+        }
 
-        navigete('/schedule/' + user.userId)
+        navigete(`/schedule/${user.userId}`)
     }, [title, location, startTime, endTime, isPrivate, participants, color])
 
     const handleIsFreindModal = useCallback(() => {
@@ -77,7 +81,6 @@ export default function ScheduleAdd() {
     }, [isFreindModal])
 
     const handleAddFreind = (freind: Freinds) => {
-        console.log('click')
         setParticipants((prev) => [...prev, freind])
     }
 
@@ -105,7 +108,11 @@ export default function ScheduleAdd() {
             )}
             {/* 참여자 목록 모달 */}
 
-            <div className="flex w-full flex-col  items-center justify-center h-full gap-2">
+            <div
+                className={`flex w-full flex-col  items-center justify-center h-full gap-2 
+                ${getDarkMode() ? 'bg-slate-700 text-slate-300' : ''}
+            `}
+            >
                 <div className="flex flex-col  w-4/5">
                     <label htmlFor="title" className="header">
                         Title
@@ -115,7 +122,9 @@ export default function ScheduleAdd() {
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="rounded p-2divide-slate-800	  border	 text-2xl"
+                        className={`rounded p-2divide-slate-800	  border	 text-2xl ${
+                            getDarkMode() ? 'bg-slate-400 text-slate-300' : ''
+                        }`}
                     />
 
                     <label htmlFor="location" className="header mt-4">
@@ -126,7 +135,9 @@ export default function ScheduleAdd() {
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="rounded p-2divide-slate-800 border p-2  text-base"
+                        className={`rounded p-2divide-slate-800 border p-2  text-base ${
+                            getDarkMode() ? 'bg-slate-400 text-slate-300' : ''
+                        }`}
                     />
 
                     <label htmlFor="startTime" className="header mt-4">
@@ -137,7 +148,9 @@ export default function ScheduleAdd() {
                         type="datetime-local"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
-                        className="rounded p-2 text-xl"
+                        className={`rounded p-2 text-xl ${
+                            getDarkMode() ? 'bg-slate-400 text-slate-300' : ''
+                        }`}
                     />
 
                     <label htmlFor="endTime" className="header mt-4">
@@ -148,7 +161,9 @@ export default function ScheduleAdd() {
                         type="datetime-local"
                         value={endTime}
                         onChange={(e) => setEndTime(e.target.value)}
-                        className="rounded p-2 text-xl"
+                        className={`rounded p-2 text-xl ${
+                            getDarkMode() ? 'bg-slate-400 text-slate-300' : ''
+                        }`}
                     />
 
                     <div className="flex flex-row justify-between mt-4">
