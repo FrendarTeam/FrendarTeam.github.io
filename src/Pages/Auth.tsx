@@ -76,10 +76,12 @@ export default function Auth() {
     }
 
     return (
-        <div className="">
-            <button onClick={() => clickKakaoLogin()}>
-                <img src={kakaoLogin} />
-            </button>
+        <div className="flex justify-center items-center  w-full h-full">
+            <div className="flex">
+                <button onClick={() => clickKakaoLogin()}>
+                    <img src={kakaoLogin} />
+                </button>
+            </div>
         </div>
     )
 }
