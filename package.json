@@ -61,5 +61,5 @@
         "@types/react-transition-group": "^4.4.9",
         "gh-pages": "^6.1.1"
     },
-    "homepage": "https://frendarteam.github.io/react/"
+    "homepage": "http://frendarteam.github.io/react"
 }
