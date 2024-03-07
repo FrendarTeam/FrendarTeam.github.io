@@ -5843,6 +5843,11 @@ jake@^10.8.5:
     filelist "^1.0.4"
     minimatch "^3.1.2"
 
+jekyll@^3.0.0-beta1:
+  version "3.0.0-beta1"
+  resolved "https://registry.npmjs.org/jekyll/-/jekyll-3.0.0-beta1.tgz"
+  integrity sha512-aEochTAoY//2y10FPR+HDbEIdvPhH/uE94Umc8+fkS0EZUoRIbD7tTZ81QZa2/mk6qcMLzeM7lXjvOaLT6ALig==
+
 jest-changed-files@^27.5.1:
   version "27.5.1"
   resolved "https://registry.npmjs.org/jest-changed-files/-/jest-changed-files-27.5.1.tgz"
