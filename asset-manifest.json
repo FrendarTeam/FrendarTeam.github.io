@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.5adaa7c4.css",
+    "main.js": "/static/js/main.5a544bb7.js",
+    "static/media/SpoqaHanSansNeo-Medium.ttf": "/static/media/SpoqaHanSansNeo-Medium.a870c85269daef382037.ttf",
+    "service-worker.js": "/service-worker.js",
+    "static/media/pencil.png": "/static/media/pencil.48a509a89a20feb467d3.png",
+    "static/media/freind.png": "/static/media/freind.a9ab450ae35efb47b35c.png",
+    "static/media/trash.png": "/static/media/trash.c4e35861d2606e76ed78.png",
+    "index.html": "/index.html",
+    "main.5adaa7c4.css.map": "/static/css/main.5adaa7c4.css.map",
+    "main.5a544bb7.js.map": "/static/js/main.5a544bb7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5adaa7c4.css",
+    "static/js/main.5a544bb7.js"
+  ]
+}
