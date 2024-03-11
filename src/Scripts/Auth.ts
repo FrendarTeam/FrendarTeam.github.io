@@ -14,13 +14,14 @@ export class AuthAPI {
                 {
                     grant_type: 'authorization_code',
                     client_id: process.env.REACT_APP_KAKAO_CLIENT,
-                    redirect_uri: 'http://localhost:3000/auth',
+                    redirect_uri: `http://localhost:3000/auth`,
                     code,
                     client_secret: process.env.REACT_APP_SECRET,
                 },
                 {
                     headers: {
-                        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+                        'Content-type':
+                            'application/x-www-form-urlencoded;charset=utf-8',
                     },
                 },
             )

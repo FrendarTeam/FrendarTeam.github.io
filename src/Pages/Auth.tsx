@@ -67,7 +67,7 @@ export default function Auth() {
     const clickKakaoLogin = () => {
         const restApiKey = process.env.REACT_APP_KAKAO_REST_API_KEY
 
-        const redirectUri = 'https://frendarteam.github.io/auth'
+        const redirectUri = 'http://localhost:3000/auth'
         const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
         const handleLogin = () => {
             window.location.href = kakaoURL
